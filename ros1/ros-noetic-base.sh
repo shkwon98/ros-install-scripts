@@ -1,23 +1,24 @@
 #!/usr/bin/env bash
 set -eu
 
-[[ "$(lsb_release -sc)" == "xenial" ]] || exit 1
-ROS_DISTRO=kinetic
+[[ "$(lsb_release -sc)" == "focal" ]] || exit 1
+ROS_DISTRO=noetic
 
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 
-sudo apt install -y curl
+sudo apt-get install -y curl
 curl -k https://raw.githubusercontent.com/ros/rosdistro/master/ros.key | sudo apt-key add -
-sudo apt update || echo ""
+sudo apt-get update || echo ""
 
-sudo apt install -y ros-${ROS_DISTRO}-ros-base
-python --version 2>&1 | grep -q "2.7" || exit 1
+sudo apt-get install -y ros-${ROS_DISTRO}-ros-base
+sudo apt-get install -y python3-rosdep
 
 ls /etc/ros/rosdep/sources.list.d/20-default.list > /dev/null 2>&1 && sudo rm /etc/ros/rosdep/sources.list.d/20-default.list
 sudo rosdep init 
 rosdep update
 
-sudo apt install -y python-rosinstall python-rosinstall-generator python-wstool build-essential python-catkin-tools python3-vcstool
+sudo apt-get install -y python3-rosinstall python3-rosinstall-generator python3-wstool build-essential python3-vcstool
+sudo apt-get install -y python3-catkin-tools python3-osrf-pycommon
 
 grep -F "source /opt/ros/${ROS_DISTRO}/setup.bash" ~/.bashrc ||
 echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc
@@ -34,7 +35,4 @@ echo "export ROS_MASTER_URI=http://\$ROS_IP:11311" >> ~/.bashrc
 echo ""
 echo "Success installing ROS ${ROS_DISTRO}"
 echo "Run 'source ~/.bashrc'"
-echo ""
-echo "If any error occurs, please refer to the following URL."
-echo "https://github.com/Tiryoh/ros_setup_scripts_ubuntu/"
 echo ""

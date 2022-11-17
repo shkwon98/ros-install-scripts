@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -eu
 
-[[ "$(lsb_release -sc)" == "bionic" ]] || exit 1
-ROS_DISTRO=melodic
+[[ "$(lsb_release -sc)" == "xenial" ]] || exit 1
+ROS_DISTRO=kinetic
 
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 
@@ -10,7 +10,7 @@ sudo apt install -y curl
 curl -k https://raw.githubusercontent.com/ros/rosdistro/master/ros.key | sudo apt-key add -
 sudo apt update || echo ""
 
-sudo apt install -y ros-${ROS_DISTRO}-desktop-full python-rosdep
+sudo apt install -y ros-${ROS_DISTRO}-desktop-full
 python --version 2>&1 | grep -q "2.7" || exit 1
 
 ls /etc/ros/rosdep/sources.list.d/20-default.list > /dev/null 2>&1 && sudo rm /etc/ros/rosdep/sources.list.d/20-default.list
@@ -34,7 +34,4 @@ echo "export ROS_MASTER_URI=http://\$ROS_IP:11311" >> ~/.bashrc
 echo ""
 echo "Success installing ROS ${ROS_DISTRO}"
 echo "Run 'source ~/.bashrc'"
-echo ""
-echo "If any error occurs, please refer to the following URL."
-echo "https://github.com/Tiryoh/ros_setup_scripts_ubuntu/"
 echo ""
