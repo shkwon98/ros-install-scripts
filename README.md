@@ -1,15 +1,13 @@
 # ros_installation_scripts
 
-## Compatible Version Description
-
 <br>
+
+## Compatible Version Description
 
 **ROS 1**
 * Ubuntu 16.04 (Xenial Xerus) + ROS 1 Kinetic (EOL)
 * Ubuntu 18.04 (Bionic Beaver) + ROS 1 Melodic
 * Ubuntu 20.04 (Focal Fossa) + ROS 1 Noetic
-
-<br>
 
 **ROS 2**
 * Ubuntu 16.04 (Xenial Xerus) + ROS 2 Dashing (EOL)
@@ -22,13 +20,8 @@
 
 <br>
 
----
-
-<br>
-
 ## Getting Started
 
-<br>
 
 ### 1) Give Execution Permission
 Let's make all script files executable.
