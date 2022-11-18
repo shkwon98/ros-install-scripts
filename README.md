@@ -31,7 +31,7 @@ chmod -R +x ros_installation_scripts
 ```
 
 ### 2) Install ROS
-Refer to the Version Description above and install the desired version of ROS.
+Refer to the version description above and install the desired version of ROS.
 
 **ROS 1**
 
