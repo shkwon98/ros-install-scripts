@@ -1,4 +1,4 @@
-# ros_installation_scripts
+# ros-install-scripts
 
 <br>
 
@@ -27,7 +27,7 @@
 Let's make all script files executable.
 
 ```console
-chmod -R +x ros_installation_scripts
+chmod -R +x ros-install-scripts
 ```
 
 ### 2) Install ROS
@@ -40,12 +40,12 @@ Refer to the version description above and install the desired version of ROS.
 
 * To install `ros-kinetic-ros-base`, run the following command.
     ```console
-    ./ros_installation_scripts/ros1/ros-kinetic-base.sh
+    ./ros-install-scripts/ros1/ros-kinetic-base.sh
     ```
 
 * To install `ros-kinetic-desktop-full`, run the following command.
     ```console
-    ./ros_installation_scripts/ros1/ros-kinetic-desktop-full.sh
+    ./ros-install-scripts/ros1/ros-kinetic-desktop-full.sh
     ```
 
 </details>
@@ -55,12 +55,12 @@ Refer to the version description above and install the desired version of ROS.
 
 * To install `ros-melodic-ros-base`, run the following command.
     ```console
-    ./ros_installation_scripts/ros1/ros-melodic-base.sh
+    ./ros-install-scripts/ros1/ros-melodic-base.sh
     ```
 
 * To install `ros-melodic-desktop-full`, run the following command.
     ```console
-    ./ros_installation_scripts/ros1/ros-melodic-desktop-full.sh
+    ./ros-install-scripts/ros1/ros-melodic-desktop-full.sh
     ```
 
 </details>
@@ -70,12 +70,12 @@ Refer to the version description above and install the desired version of ROS.
 
 * To install `ros-noetic-ros-base`, run the following command.
     ```console
-    ./ros_installation_scripts/ros1/ros-noetic-base.sh
+    ./ros-install-scripts/ros1/ros-noetic-base.sh
     ```
 
 * To install `ros-noetic-desktop-full`, run the following command.
     ```console
-    ./ros_installation_scripts/ros1/ros-noetic-desktop-full.sh
+    ./ros-install-scripts/ros1/ros-noetic-desktop-full.sh
     ```
 
 </details>
@@ -89,12 +89,12 @@ Refer to the version description above and install the desired version of ROS.
 
 * To install `ros-dashing-ros-base`, run the following command.
     ```console
-    ./ros_installation_scripts/ros2/ros2-dashing-base.sh
+    ./ros-install-scripts/ros2/ros2-dashing-base.sh
     ``` 
 
 * To install `ros-dashing-desktop`, run the following command.
     ```console
-    ./ros_installation_scripts/ros2/ros2-dashing-desktop.sh
+    ./ros-install-scripts/ros2/ros2-dashing-desktop.sh
     ```
 
 </details>
@@ -104,12 +104,12 @@ Refer to the version description above and install the desired version of ROS.
 
 * To install `ros-eloquent-ros-base`, run the following command.
     ```console
-    ./ros_installation_scripts/ros2/ros2-eloquent-base.sh
+    ./ros-install-scripts/ros2/ros2-eloquent-base.sh
     ``` 
 
 * To install `ros-eloquent-desktop`, run the following command.
     ```console
-    ./ros_installation_scripts/ros2/ros2-eloquent-desktop.sh
+    ./ros-install-scripts/ros2/ros2-eloquent-desktop.sh
     ```
 
 </details>
@@ -119,12 +119,12 @@ Refer to the version description above and install the desired version of ROS.
 
 * To install `ros-foxy-ros-base`, run the following command.
     ```console
-    ./ros_installation_scripts/ros2/ros2-foxy-base.sh
+    ./ros-install-scripts/ros2/ros2-foxy-base.sh
     ``` 
 
 * To install `ros-foxy-desktop`, run the following command.
     ```console
-    ./ros_installation_scripts/ros2/ros2-foxy-desktop.sh
+    ./ros-install-scripts/ros2/ros2-foxy-desktop.sh
     ```
 
 </details>
@@ -134,12 +134,12 @@ Refer to the version description above and install the desired version of ROS.
 
 * To install `ros-galactic-ros-base`, run the following command.
     ```console
-    ./ros_installation_scripts/ros2/ros2-galactic-base.sh
+    ./ros-install-scripts/ros2/ros2-galactic-base.sh
     ``` 
 
 * To install `ros-galactic-desktop`, run the following command.
     ```console
-    ./ros_installation_scripts/ros2/ros2-galactic-desktop.sh
+    ./ros-install-scripts/ros2/ros2-galactic-desktop.sh
     ```
 
 </details>
@@ -149,12 +149,12 @@ Refer to the version description above and install the desired version of ROS.
 
 * To install `ros-humble-ros-base`, run the following command.
     ```console
-    ./ros_installation_scripts/ros2/ros2-humble-base.sh
+    ./ros-install-scripts/ros2/ros2-humble-base.sh
     ``` 
 
 * To install `ros-humble-desktop`, run the following command.
     ```console
-    ./ros_installation_scripts/ros2/ros2-humble-desktop.sh
+    ./ros-install-scripts/ros2/ros2-humble-desktop.sh
     ```
 
 </details>
