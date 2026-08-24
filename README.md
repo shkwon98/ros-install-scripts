@@ -16,8 +16,7 @@
   <a href="#quick-start">Quick start</a> ·
   <a href="#supported-distributions">Distributions</a> ·
   <a href="#installation-variants">Variants</a> ·
-  <a href="#eol-support">EOL support</a> ·
-  <a href="#limitations">Limitations</a>
+  <a href="#eol-support">EOL support</a>
 </p>
 
 </div>
@@ -86,15 +85,15 @@ Each ROS distribution targets one canonical Ubuntu release. **EOL** entries are 
 
 | Ubuntu | ROS 1 | ROS 2 |
 | --- | --- | --- |
-| 10.04 Lucid | Box Turtle **EOL**, C Turtle **EOL**, Diamondback **EOL**, Electric **EOL** | — |
-| 12.04 Precise | Fuerte **EOL**, Groovy **EOL**, Hydro **EOL** | — |
-| 14.04 Trusty | Indigo **EOL**, Jade **EOL** | — |
-| 16.04 Xenial | Kinetic **EOL**, Lunar **EOL** | Ardent **EOL** |
-| 18.04 Bionic | Melodic **EOL** | Bouncy **EOL**, Crystal **EOL**, Dashing **EOL**, Eloquent **EOL** |
-| 20.04 Focal | Noetic **EOL** | Foxy **EOL**, Galactic **EOL** |
-| 22.04 Jammy | — | Humble, Iron **EOL** |
-| 24.04 Noble | — | Jazzy, Kilted |
-| 26.04 Resolute | — | Lyrical, Rolling |
+| 10.04 Lucid | <a href="https://www.ros.org/news/2010/03/ros-distributions-box-turtle-release.html">Box Turtle</a> **EOL**<br><a href="https://wiki.ros.org/cturtle"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/cturtle_no_background.png" height="48" alt="C Turtle artwork"></a> <a href="https://wiki.ros.org/diamondback"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/diamondback.jpg" height="48" alt="Diamondback artwork"></a> <a href="https://wiki.ros.org/electric"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/electric.png" height="48" alt="Electric Emys artwork"></a><br>C Turtle **EOL**, Diamondback **EOL**, Electric **EOL** | — |
+| 12.04 Precise | <a href="https://wiki.ros.org/fuerte"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/fuerte.jpg" height="48" alt="Fuerte Turtle artwork"></a> <a href="https://wiki.ros.org/groovy"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/groovy.jpg" height="48" alt="Groovy Galapagos artwork"></a> <a href="https://wiki.ros.org/hydro"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/hydro.png" height="48" alt="Hydro Medusa artwork"></a><br>Fuerte **EOL**, Groovy **EOL**, Hydro **EOL** | — |
+| 14.04 Trusty | <a href="https://wiki.ros.org/indigo"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/indigo.png" height="48" alt="Indigo Igloo artwork"></a> <a href="https://wiki.ros.org/jade"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/jade.png" height="48" alt="Jade Turtle artwork"></a><br>Indigo **EOL**, Jade **EOL** | — |
+| 16.04 Xenial | <a href="https://wiki.ros.org/kinetic"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/kinetic.png" height="48" alt="Kinetic Kame artwork"></a> <a href="https://wiki.ros.org/lunar"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/lunar.png" height="48" alt="Lunar Loggerhead artwork"></a><br>Kinetic **EOL**, Lunar **EOL** | <a href="https://docs.ros.org/en/ros2_documentation/lyrical/Releases/Release-Ardent-Apalone.html"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/ArdentApalone.png" height="48" alt="Ardent Apalone artwork"></a><br>Ardent **EOL** |
+| 18.04 Bionic | <a href="https://wiki.ros.org/melodic"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/melodic.png" height="48" alt="Melodic Morenia artwork"></a><br>Melodic **EOL** | <a href="https://docs.ros.org/en/ros2_documentation/lyrical/Releases/Release-Bouncy-Bolson.html"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/bouncy.png" height="48" alt="Bouncy Bolson artwork"></a> <a href="https://docs.ros.org/en/ros2_documentation/lyrical/Releases/Release-Crystal-Clemmys.html"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/crystal.png" height="48" alt="Crystal Clemmys artwork"></a> <a href="https://docs.ros.org/en/ros2_documentation/lyrical/Releases/Release-Dashing-Diademata.html"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/dashing.png" height="48" alt="Dashing Diademata artwork"></a> <a href="https://docs.ros.org/en/ros2_documentation/lyrical/Releases/Release-Eloquent-Elusor.html"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/eloquent.png" height="48" alt="Eloquent Elusor artwork"></a><br>Bouncy **EOL**, Crystal **EOL**, Dashing **EOL**, Eloquent **EOL** |
+| 20.04 Focal | <a href="https://wiki.ros.org/noetic"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/noetic.png" height="48" alt="Noetic Ninjemys artwork"></a><br>Noetic **EOL** | <a href="https://docs.ros.org/en/ros2_documentation/lyrical/Releases/Release-Foxy-Fitzroy.html"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/foxy.png" height="48" alt="Foxy Fitzroy artwork"></a> <a href="https://docs.ros.org/en/ros2_documentation/lyrical/Releases/Release-Galactic-Geochelone.html"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/galactic_transparent.png" height="48" alt="Galactic Geochelone artwork"></a><br>Foxy **EOL**, Galactic **EOL** |
+| 22.04 Jammy | — | <a href="https://docs.ros.org/en/ros2_documentation/lyrical/Releases/Release-Humble-Hawksbill.html"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/humble/HumbleHawksbillTransparent.png" height="48" alt="Humble Hawksbill artwork"></a> <a href="https://docs.ros.org/en/ros2_documentation/lyrical/Releases/Release-Iron-Irwini.html"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/iron/IronIrwini_transparent.png" height="48" alt="Iron Irwini artwork"></a><br>Humble, Iron **EOL** |
+| 24.04 Noble | — | <a href="https://docs.ros.org/en/ros2_documentation/lyrical/Releases/Release-Jazzy-Jalisco.html"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/jazzy/JazzyJalisco-noborder.png" height="48" alt="Jazzy Jalisco artwork"></a> <a href="https://docs.ros.org/en/ros2_documentation/lyrical/Releases/Release-Kilted-Kaiju.html"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/kilted/kilted-kaiju.png" height="48" alt="Kilted Kaiju artwork"></a><br>Jazzy, Kilted |
+| 26.04 Resolute | — | <a href="https://docs.ros.org/en/ros2_documentation/lyrical/Releases/Release-Lyrical-Luth.html"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/lyrical/lyrical-luth.png" height="48" alt="Lyrical Luth artwork"></a> <a href="https://docs.ros.org/en/ros2_documentation/lyrical/Releases/Release-Rolling-Ridley.html"><img src="https://raw.githubusercontent.com/openrobotics/artwork/4024191d62211c4d4fa024e9974dd372d92aa23a/distributions/rolling/rolling_transparent.png" height="48" alt="Rolling Ridley artwork"></a><br>Lyrical, Rolling |
 
 Humble, Jazzy, Kilted, and Lyrical use the current official ROS repository. Rolling uses the official testing repository.
 
@@ -104,19 +103,6 @@ Humble, Jazzy, Kilted, and Lyrical use the current official ROS repository. Roll
 | --- | --- | --- |
 | `base` | Headless systems, robots, and minimal installations | ROS base metapackage |
 | `desktop` | Workstations that need GUI tools and common desktop packages | ROS 1 desktop-full or ROS 2 desktop |
-
-Early ROS distributions use different historical metapackage names:
-
-| Distribution | `base` | `desktop` |
-| --- | --- | --- |
-| Box Turtle | `ros-boxturtle-base` | Not available |
-| C Turtle | `ros-cturtle-base` | `ros-cturtle-all` |
-| Diamondback and Electric | `ros-<distro>-ros-base` | `ros-<distro>-desktop-full` |
-| Fuerte | `ros-fuerte-ros` | `ros-fuerte-desktop-full` |
-| Groovy through Noetic | `ros-<distro>-ros-base` | `ros-<distro>-desktop-full` |
-| ROS 2 | `ros-<distro>-ros-base` | `ros-<distro>-desktop` |
-
-`./install.sh boxturtle desktop` is rejected before system changes because no general desktop metapackage exists in the final Box Turtle snapshot.
 
 ## EOL support
 
@@ -138,14 +124,8 @@ Your Ubuntu package sources must already work. For an EOL Ubuntu release, config
 4. Install the metapackage and verify `/opt/ros/<distribution>/setup.bash`.
 5. Print the shell command needed to use the installation.
 
-## Limitations
-
-- Ubuntu only; every ROS distribution supports the single Ubuntu target shown above.
-- EOL installation requires working archived Ubuntu sources and HTTPS access to `keyserver.ubuntu.com`. Very old TLS stacks may not connect.
-- Package and architecture availability is limited to what the selected ROS repository retains.
-- The installer does not initialize rosdep, install development tools, upgrade Ubuntu, or persist shell configuration.
-- CI checks Bash syntax, ShellCheck, and non-privileged behavior. It does not perform full ROS installations.
-
 ## License
 
 This repository is licensed under the [Apache License 2.0](LICENSE). ROS packages installed by this project remain subject to their respective licenses.
+
+Distribution artwork by illustrator Joshua Ellingson is provided by [Open Robotics](https://github.com/openrobotics/artwork/tree/master/distributions) under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) and remains subject to the [ROS trademark policy](https://www.ros.org/blog/media/).
