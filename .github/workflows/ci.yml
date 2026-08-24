@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - install.sh
+      - tests/**
+      - .github/workflows/ci.yml
+  pull_request:
+    branches: [main]
+    paths:
+      - install.sh
+      - tests/**
+      - .github/workflows/ci.yml
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+      - name: Check Bash syntax
+        run: bash -n install.sh tests/test_install.sh
+      - name: Run ShellCheck
+        run: shellcheck install.sh tests/test_install.sh
+      - name: Run self-test
+        run: bash tests/test_install.sh
