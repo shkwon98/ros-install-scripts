@@ -1,160 +1,151 @@
-# ros-install-scripts
+<div align="center">
 
-<br>
+<h1>ROS Install Scripts</h1>
 
-## Compatible Version Description
+<p><strong>Install any official ROS 1 or ROS 2 distribution on its canonical Ubuntu release with one command.</strong></p>
 
-**ROS 1**
-* Ubuntu 16.04 (Xenial Xerus) + ROS 1 Kinetic (EOL)
-* Ubuntu 18.04 (Bionic Beaver) + ROS 1 Melodic
-* Ubuntu 20.04 (Focal Fossa) + ROS 1 Noetic
+<p>
+  <a href="https://github.com/shkwon98/ros-install-scripts/actions/workflows/ci.yml"><img alt="CI status" src="https://github.com/shkwon98/ros-install-scripts/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="#supported-distributions"><img alt="ROS 1 and ROS 2" src="https://img.shields.io/badge/ROS-1%20%26%202-22314E?logo=ros&logoColor=white"></a>
+  <a href="#supported-distributions"><img alt="Ubuntu" src="https://img.shields.io/badge/Ubuntu-10.04%E2%80%9326.04-E95420?logo=ubuntu&logoColor=white"></a>
+  <a href="#eol-support"><img alt="EOL releases" src="https://img.shields.io/badge/EOL-supported-6B7280"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-D22128"></a>
+</p>
 
-**ROS 2**
-* Ubuntu 16.04 (Xenial Xerus) + ROS 2 Dashing (EOL)
-* Ubuntu 16.04 (Xenial Xerus) + ROS 2 Eloquent (EOL)
-* Ubuntu 18.04 (Bionic Beaver) + ROS 2 Dashing (EOL)
-* Ubuntu 18.04 (Bionic Beaver) + ROS 2 Eloquent (EOL)
-* Ubuntu 20.04 (Focal Fossa) + ROS 2 Foxy
-* Ubuntu 20.04 (Focal Fossa) + ROS 2 Galactic
-* Ubuntu 22.04 (Jammy Jellyfish) + ROS 2 Humble
+<p>
+  <a href="#quick-start">Quick start</a> ·
+  <a href="#supported-distributions">Distributions</a> ·
+  <a href="#installation-variants">Variants</a> ·
+  <a href="#eol-support">EOL support</a> ·
+  <a href="#limitations">Limitations</a>
+</p>
 
-<br>
+</div>
 
-## Getting Started
+---
 
+Choose a ROS distribution and an installation variant. The installer validates the host Ubuntu release before making system changes.
 
-### 1) Give Execution Permission
-Let's make all script files executable.
+| Command | Ubuntu targets | Variants |
+| :--- | :--- | :--- |
+| `./install.sh <distribution> <base\|desktop>` | 10.04 Lucid through 26.04 Resolute | `base`, `desktop` |
 
-```console
-chmod -R +x ros-install-scripts
+> [!IMPORTANT]
+> This is a community project. It is not an official ROS or Ubuntu installer.
+
+> [!WARNING]
+> EOL distributions and their Ubuntu releases receive no security fixes. Use them only when compatibility requires it, preferably in an isolated environment.
+
+## Quick start
+
+### Prerequisites
+
+- The exact Ubuntu release listed for your ROS distribution
+- `sudo` access and an internet connection
+- The Ubuntu `universe` component enabled
+
+On a current Ubuntu release, enable `universe` with:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository -y universe
 ```
 
-### 2) Install ROS
-Refer to the version description above and install the desired version of ROS.
+Clone the repository and make the installer executable:
 
-**ROS 1**
+```bash
+git clone https://github.com/shkwon98/ros-install-scripts.git
+cd ros-install-scripts
+chmod +x install.sh
+```
 
-<details>
-<summary>Kinetic (EOL)</summary>
+Install a distribution:
 
-* To install `ros-kinetic-ros-base`, run the following command.
-    ```console
-    ./ros-install-scripts/ros1/ros-kinetic-base.sh
-    ```
+```bash
+./install.sh jazzy desktop
+```
 
-* To install `ros-kinetic-desktop-full`, run the following command.
-    ```console
-    ./ros-install-scripts/ros1/ros-kinetic-desktop-full.sh
-    ```
+Other examples:
 
-</details>
+```bash
+./install.sh noetic base   # EOL ROS 1
+./install.sh iron desktop # EOL ROS 2
+./install.sh rolling base # Rolling
+```
 
-<details>
-<summary>Melodic</summary>
+The installer does not edit your shell startup files. Use the command printed after installation:
 
-* To install `ros-melodic-ros-base`, run the following command.
-    ```console
-    ./ros-install-scripts/ros1/ros-melodic-base.sh
-    ```
+```bash
+source /opt/ros/<distribution>/setup.bash
+```
 
-* To install `ros-melodic-desktop-full`, run the following command.
-    ```console
-    ./ros-install-scripts/ros1/ros-melodic-desktop-full.sh
-    ```
+## Supported distributions
 
-</details>
+Each ROS distribution targets one canonical Ubuntu release. **EOL** entries are installed from their frozen final snapshot.
 
-<details>
-<summary>Noetic</summary>
+| Ubuntu | ROS 1 | ROS 2 |
+| --- | --- | --- |
+| 10.04 Lucid | Box Turtle **EOL**, C Turtle **EOL**, Diamondback **EOL**, Electric **EOL** | — |
+| 12.04 Precise | Fuerte **EOL**, Groovy **EOL**, Hydro **EOL** | — |
+| 14.04 Trusty | Indigo **EOL**, Jade **EOL** | — |
+| 16.04 Xenial | Kinetic **EOL**, Lunar **EOL** | Ardent **EOL** |
+| 18.04 Bionic | Melodic **EOL** | Bouncy **EOL**, Crystal **EOL**, Dashing **EOL**, Eloquent **EOL** |
+| 20.04 Focal | Noetic **EOL** | Foxy **EOL**, Galactic **EOL** |
+| 22.04 Jammy | — | Humble, Iron **EOL** |
+| 24.04 Noble | — | Jazzy, Kilted |
+| 26.04 Resolute | — | Lyrical, Rolling |
 
-* To install `ros-noetic-ros-base`, run the following command.
-    ```console
-    ./ros-install-scripts/ros1/ros-noetic-base.sh
-    ```
+Humble, Jazzy, Kilted, and Lyrical use the current official ROS repository. Rolling uses the official testing repository.
 
-* To install `ros-noetic-desktop-full`, run the following command.
-    ```console
-    ./ros-install-scripts/ros1/ros-noetic-desktop-full.sh
-    ```
+## Installation variants
 
-</details>
+| Variant | Intended use | Package family |
+| --- | --- | --- |
+| `base` | Headless systems, robots, and minimal installations | ROS base metapackage |
+| `desktop` | Workstations that need GUI tools and common desktop packages | ROS 1 desktop-full or ROS 2 desktop |
 
-<br>
+Early ROS distributions use different historical metapackage names:
 
-**ROS 2**
+| Distribution | `base` | `desktop` |
+| --- | --- | --- |
+| Box Turtle | `ros-boxturtle-base` | Not available |
+| C Turtle | `ros-cturtle-base` | `ros-cturtle-all` |
+| Diamondback and Electric | `ros-<distro>-ros-base` | `ros-<distro>-desktop-full` |
+| Fuerte | `ros-fuerte-ros` | `ros-fuerte-desktop-full` |
+| Groovy through Noetic | `ros-<distro>-ros-base` | `ros-<distro>-desktop-full` |
+| ROS 2 | `ros-<distro>-ros-base` | `ros-<distro>-desktop` |
 
-<details>
-<summary>Dashing (EOL)</summary>
+`./install.sh boxturtle desktop` is rejected before system changes because no general desktop metapackage exists in the final Box Turtle snapshot.
 
-* To install `ros-dashing-ros-base`, run the following command.
-    ```console
-    ./ros-install-scripts/ros2/ros2-dashing-base.sh
-    ``` 
+## EOL support
 
-* To install `ros-dashing-desktop`, run the following command.
-    ```console
-    ./ros-install-scripts/ros2/ros2-dashing-desktop.sh
-    ```
+EOL distributions use the signed final repositories at `snapshots.ros.org`. The installer downloads the ROS Snapshot Builder public key from Ubuntu's keyserver and accepts it only when its complete fingerprint matches:
 
-</details>
+```text
+4B63 CF8F DE49 746E 98FA 01DD AD19 BAB3 CBF1 25EA
+```
 
-<details>
-<summary>Eloquent (EOL)</summary>
+The snapshot repository uses HTTP because its current TLS certificate does not match the hostname. Apt signature verification remains enabled; the installer never uses `trusted=yes` or unauthenticated package installation.
 
-* To install `ros-eloquent-ros-base`, run the following command.
-    ```console
-    ./ros-install-scripts/ros2/ros2-eloquent-base.sh
-    ``` 
+Your Ubuntu package sources must already work. For an EOL Ubuntu release, configure its archived sources and include the `universe` component before running the installer.
 
-* To install `ros-eloquent-desktop`, run the following command.
-    ```console
-    ./ros-install-scripts/ros2/ros2-eloquent-desktop.sh
-    ```
+## How installation works
 
-</details>
+1. Validate the distribution, variant, Ubuntu release, and `universe` component.
+2. Configure the official current, testing, or final snapshot repository.
+3. Confirm that the selected metapackage exists for the current architecture.
+4. Install the metapackage and verify `/opt/ros/<distribution>/setup.bash`.
+5. Print the shell command needed to use the installation.
 
-<details>
-<summary>Foxy</summary>
+## Limitations
 
-* To install `ros-foxy-ros-base`, run the following command.
-    ```console
-    ./ros-install-scripts/ros2/ros2-foxy-base.sh
-    ``` 
+- Ubuntu only; every ROS distribution supports the single Ubuntu target shown above.
+- EOL installation requires working archived Ubuntu sources and HTTPS access to `keyserver.ubuntu.com`. Very old TLS stacks may not connect.
+- Package and architecture availability is limited to what the selected ROS repository retains.
+- The installer does not initialize rosdep, install development tools, upgrade Ubuntu, or persist shell configuration.
+- CI checks Bash syntax, ShellCheck, and non-privileged behavior. It does not perform full ROS installations.
 
-* To install `ros-foxy-desktop`, run the following command.
-    ```console
-    ./ros-install-scripts/ros2/ros2-foxy-desktop.sh
-    ```
+## License
 
-</details>
-
-<details>
-<summary>Galactic</summary>
-
-* To install `ros-galactic-ros-base`, run the following command.
-    ```console
-    ./ros-install-scripts/ros2/ros2-galactic-base.sh
-    ``` 
-
-* To install `ros-galactic-desktop`, run the following command.
-    ```console
-    ./ros-install-scripts/ros2/ros2-galactic-desktop.sh
-    ```
-
-</details>
-
-<details>
-<summary>Humble</summary>
-
-* To install `ros-humble-ros-base`, run the following command.
-    ```console
-    ./ros-install-scripts/ros2/ros2-humble-base.sh
-    ``` 
-
-* To install `ros-humble-desktop`, run the following command.
-    ```console
-    ./ros-install-scripts/ros2/ros2-humble-desktop.sh
-    ```
-
-</details>
+This repository is licensed under the [Apache License 2.0](LICENSE). ROS packages installed by this project remain subject to their respective licenses.
