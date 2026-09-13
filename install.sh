@@ -196,11 +196,11 @@ configure_snapshot_repository() {
   run_as_root install -m 0644 "$keyring" /etc/apt/trusted.gpg.d/ros-snapshot.gpg
   printf 'deb http://snapshots.ros.org/%s/final/ubuntu %s main\n' \
     "$distro" "$codename" > "$temp_dir/ros-snapshot.list"
-  run_as_root install -m 0644 "$temp_dir/ros-snapshot.list" /etc/apt/sources.list.d/ros-snapshot.list
+  run_as_root install -m 0644 "$temp_dir/ros-snapshot.list" "/etc/apt/sources.list.d/ros-$distro-snapshot.list"
 }
 
 configure_apt_source_package() {
-  local repository=$1 codename=$2 temp_dir=$3 source_package version asset url
+  local repository=$1 codename=$2 temp_dir=$3 source_package version asset url source_file
   source_package=ros2-apt-source
   if [[ "$repository" == testing ]]; then
     source_package=ros2-testing-apt-source
@@ -213,6 +213,21 @@ configure_apt_source_package() {
   asset="${source_package}_${version}.${codename}_all.deb"
   url="https://github.com/ros-infrastructure/ros-apt-source/releases/download/${version}/${asset}"
   curl -fL "$url" -o "$temp_dir/$asset"
+
+  # Let APT parse the proposed configuration before dpkg changes any live sources.
+  dpkg-deb --extract "$temp_dir/$asset" "$temp_dir/source-package"
+  mkdir -p "$temp_dir/sources.list.d"
+  for source_file in /etc/apt/sources.list.d/*.list /etc/apt/sources.list.d/*.sources; do
+    if [[ -e "$source_file" ]]; then
+      cp -L -- "$source_file" "$temp_dir/sources.list.d/"
+    fi
+  done
+  cp "$temp_dir/source-package/usr/share/ros-apt-source/${source_package%-apt-source}.sources" \
+    "$temp_dir/sources.list.d/ros2.sources"
+  if ! apt-get -o "Dir::Etc::sourceparts=$temp_dir/sources.list.d" --print-uris update >/dev/null; then
+    die 'ROS source configuration conflicts with existing APT settings; review /etc/apt/sources.list and /etc/apt/sources.list.d before retrying. Repository settings were not changed.'
+  fi
+
   run_as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y "$temp_dir/$asset"
 }
 
@@ -257,7 +272,7 @@ main() {
   if ! apt-cache show "$package" >/dev/null 2>&1; then
     die "$package is unavailable for $(dpkg --print-architecture)"
   fi
-  run_as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y "$package"
+  run_as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-remove "$package"
   setup_file="/opt/ros/$distro/setup.bash"
   if [[ "$distro" == boxturtle ]]; then
     setup_file="/opt/ros/$distro/setup.sh"

@@ -31,8 +31,14 @@ jobs:
       - name: Install ShellCheck
         run: sudo apt-get update && sudo apt-get install -y shellcheck
       - name: Check Bash syntax
-        run: bash -n install.sh tests/test_install.sh
+        run: bash -n install.sh tests/test_install.sh tests/test_install_system.sh
       - name: Run ShellCheck
-        run: shellcheck install.sh tests/test_install.sh
+        run: shellcheck install.sh tests/test_install.sh tests/test_install_system.sh
       - name: Run self-test
         run: bash tests/test_install.sh
+      - name: Check legacy Ubuntu compatibility
+        run: docker run --rm -v "$PWD:/review:ro" ubuntu:14.04 bash /review/tests/test_install.sh
+      - name: Check APT conflicts in a disposable container
+        run: |
+          docker run --rm -v "$PWD:/review:ro" ubuntu:24.04 bash -c \
+            'apt-get update && apt-get install -y python3 && bash /review/tests/test_install_system.sh'
