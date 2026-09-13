@@ -31,7 +31,7 @@ resolve_package() {
     boxturtle:desktop) return 1 ;;
     cturtle:base) printf 'ros-cturtle-base\n'; return ;;
     cturtle:desktop) printf 'ros-cturtle-all\n'; return ;;
-    fuerte:base) printf 'ros-fuerte-ros\n'; return ;;
+    fuerte:base) printf 'ros-fuerte-ros-comm\n'; return ;;
   esac
 
   if [[ "$variant" == base ]]; then
@@ -69,14 +69,15 @@ read_ubuntu() {
   if [[ -r /etc/os-release ]]; then
     # shellcheck disable=SC1091
     source /etc/os-release
-    printf '%s\t%s\n' "${ID:-}" "${UBUNTU_CODENAME:-${VERSION_CODENAME:-}}"
-  elif [[ -r /etc/lsb-release ]]; then
-    # shellcheck disable=SC1091
-    source /etc/lsb-release
-    printf '%s\t%s\n' "${DISTRIB_ID:-}" "${DISTRIB_CODENAME:-}"
-  else
+  elif [[ ! -r /etc/lsb-release ]]; then
     return 1
   fi
+  if [[ -z "${UBUNTU_CODENAME:-${VERSION_CODENAME:-}}" && -r /etc/lsb-release ]]; then
+    # shellcheck disable=SC1091
+    source /etc/lsb-release
+  fi
+  printf '%s\t%s\n' "${ID:-${DISTRIB_ID:-}}" \
+    "${UBUNTU_CODENAME:-${VERSION_CODENAME:-${DISTRIB_CODENAME:-}}}"
 }
 
 sources_include_universe() {
@@ -84,26 +85,32 @@ sources_include_universe() {
   shift
   awk -v expected="$expected" '
     function has_token(value, wanted, words, count, field) {
-      count = split(value, words, /[[:space:]]+/)
+      count = split(value, words, /[ \t\r\f\v]+/)
       for (field = 1; field <= count; field++)
         if (words[field] == wanted) return 1
       return 0
     }
-    function finish_stanza() {
-      if (deb822 && tolower(enabled) != "no" && has_token(types, "deb") &&
-          has_token(suites, expected) && has_token(components, "universe")) found = 1
+    function finish_stanza(field) {
+      if (deb822 && tolower(fields["enabled"]) != "no" && has_token(fields["types"], "deb") &&
+          has_token(fields["suites"], expected) && has_token(fields["components"], "universe")) found = 1
+      for (field in fields) delete fields[field]
       deb822 = 0
-      types = suites = components = enabled = ""
+      key = ""
     }
     FNR == 1 && NR != 1 { finish_stanza() }
-    /^[[:space:]]*$/ { finish_stanza(); next }
-    /^[[:space:]]*#/ { next }
+    /^[ \t\r\f\v]*$/ { finish_stanza(); next }
+    /^[ \t\r\f\v]*#/ { next }
     {
       line = $0
-      sub(/[[:space:]]*#.*/, "", line)
-      sub(/^[[:space:]]+/, "", line)
-      sub(/[[:space:]]+$/, "", line)
-      count = split(line, words, /[[:space:]]+/)
+      sub(/[ \t\r\f\v]*#.*/, "", line)
+      continuation = deb822 && line ~ /^[ \t]/
+      sub(/^[ \t\r\f\v]+/, "", line)
+      sub(/[ \t\r\f\v]+$/, "", line)
+      if (continuation) {
+        fields[key] = fields[key] == "" ? line : fields[key] " " line
+        next
+      }
+      count = split(line, words, /[ \t\r\f\v]+/)
       if (words[1] == "deb") {
         if (has_token(line, expected) && has_token(line, "universe")) found = 1
         next
@@ -112,12 +119,9 @@ sources_include_universe() {
       if (separator) {
         key = tolower(substr(line, 1, separator - 1))
         value = substr(line, separator + 1)
-        sub(/^[[:space:]]+/, "", value)
+        sub(/^[ \t\r\f\v]+/, "", value)
         deb822 = 1
-        if (key == "types") types = value
-        else if (key == "suites") suites = value
-        else if (key == "components") components = value
-        else if (key == "enabled") enabled = value
+        fields[key] = value
       }
     }
     END { finish_stanza(); exit !found }
@@ -175,13 +179,18 @@ snapshot_key_is_trusted() {
 
 configure_snapshot_repository() {
   local distro=$1 codename=$2 temp_dir=$3
+  local key_url=$SNAPSHOT_KEY_URL
   local armored_key="$temp_dir/ros-snapshot.asc"
   local keyring="$temp_dir/ros-snapshot.gpg"
+  # Lucid lacks modern TLS; the pinned fingerprint authenticates the public key.
+  if [[ "$codename" == lucid ]]; then
+    key_url=${key_url/https:/http:}
+  fi
   run_as_root apt-get update
   run_as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates curl gnupg
-  curl -fsSL "$SNAPSHOT_KEY_URL" -o "$armored_key"
-  gpg --batch --yes --dearmor --output "$keyring" "$armored_key"
-  gpg --batch --no-default-keyring --keyring "$keyring" --with-colons --fingerprint |
+  curl -fsSL "$key_url" -o "$armored_key"
+  gpg --batch --yes --dearmor --output "$keyring" --homedir "$temp_dir" "$armored_key"
+  gpg --batch --no-default-keyring --keyring "$keyring" --homedir "$temp_dir" --with-colons --fingerprint |
     snapshot_key_is_trusted || die 'downloaded ROS snapshot key has an unexpected fingerprint'
   run_as_root install -d -m 0755 /etc/apt/trusted.gpg.d
   run_as_root install -m 0644 "$keyring" /etc/apt/trusted.gpg.d/ros-snapshot.gpg
@@ -214,7 +223,7 @@ main() {
 
   local distro=$1 variant=$2
   local generation codename lifecycle repository package
-  local os_id os_codename
+  local os_id os_codename setup_file
 
   if ! IFS=$'\t' read -r generation codename lifecycle repository package \
     < <(resolve_target "$distro" "$variant"); then
@@ -249,10 +258,14 @@ main() {
     die "$package is unavailable for $(dpkg --print-architecture)"
   fi
   run_as_root env DEBIAN_FRONTEND=noninteractive apt-get install -y "$package"
-  if [[ ! -r "/opt/ros/$distro/setup.bash" ]]; then
-    die "installation completed without /opt/ros/$distro/setup.bash"
+  setup_file="/opt/ros/$distro/setup.bash"
+  if [[ "$distro" == boxturtle ]]; then
+    setup_file="/opt/ros/$distro/setup.sh"
   fi
-  printf 'Installed %s. Run:\n  source /opt/ros/%s/setup.bash\n' "$package" "$distro"
+  if [[ ! -r "$setup_file" ]]; then
+    die "installation completed without $setup_file"
+  fi
+  printf 'Installed %s. Run:\n  source %s\n' "$package" "$setup_file"
 }
 
 if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
